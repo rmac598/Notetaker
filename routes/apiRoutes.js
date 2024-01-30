@@ -1,5 +1,7 @@
+const fs = require("fs");
+const uuid = require ('../helpers/uuid.js');
 const app = require('express').Router();
-const { readAndAppend } = require('../db/db.json');
+const {readFromFile, readAndAppend } = require('../helpers/fsUtils.js');
 
 // GET Route for retrieving all the feedback
 app.get('/notes', (req, res) =>
@@ -7,14 +9,14 @@ app.get('/notes', (req, res) =>
 );
 
 // POST Route for submitting feedback
- app.post('/', (req, res) => {
+ app.post('/notes', (req, res) => {
   // Destructuring assignment for the items in req.body
   const { title, text} = req.body;
 
   // If all the required properties are present
   if (title && text) {
     // Variable for the object we will save
-    const newFeedback = {
+    const newNote = {
       title,
       text
     };
