@@ -1,7 +1,7 @@
 const fs = require("fs");
 const uuid = require ('../helpers/uuid.js');
 const app = require('express').Router();
-const {readFromFile, readAndAppend } = require('../helpers/fsUtils.js');
+const {readFromFile, readAndAppend, deleteFromFile } = require('../helpers/fsUtils.js');
 
 // GET Route for retrieving all the feedback
 app.get('/notes', (req, res) =>
@@ -18,20 +18,36 @@ app.get('/notes', (req, res) =>
     // Variable for the object we will save
     const newNote = {
       title,
-      text
+      text,
+      id: uuid()
     };
-
+//add new note to the file
     readAndAppend(newNote, './db/db.json');
 
-    const response = {
-      status: 'success',
-      body: newNote,
-    };
-
-    res.json(response);
+   //respond to the route 
+    res.status(200).send("message recieved");
   } else {
     res.json('Error in posting note');
   }
 });
+
+//delete note
+// fetch(`/api/notes/${id}`, {
+//   method: 'DELETE',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   }
+// });
+app.delete('/notes/:id', (req, res) =>{
+  const id = req.params.id;
+  if (id){
+  deleteFromFile('./db/db.json', id);
+  res.status(200).send("yay");}
+  else{
+    res.status(400).json('this sucks')
+  }
+});
+
+
 
 module.exports = app;
