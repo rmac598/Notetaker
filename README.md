@@ -3,6 +3,7 @@
 ## Description
 The user have the ability to take notes and save them to the page.
 
+![Alt text](<Screenshot (3).png>)
 ## Table of Contents (Optional)
 If your README is long, add a table of contents to make it easy for users to find what they need.
 - [Installation](#installation)
